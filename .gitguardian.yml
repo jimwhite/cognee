@@ -5,6 +5,7 @@ secret:
   # Ignore specific file paths from scanning
   ignored-paths:
     - ".env.template"
+    - ".env.lmstudio-local"
     - ".github/workflows/*.yml"
     - "examples/**"
     - "tests/**"
