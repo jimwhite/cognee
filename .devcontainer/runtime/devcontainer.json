@@ -2,7 +2,11 @@
   "name": "Cognee Local Runtime (LM Studio + Ollama)",
   "image": "ghcr.io/astral-sh/uv:python3.12-bookworm",
   "features": {
-    "ghcr.io/devcontainers/features/git:1": {}
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "lts",
+      "nodeGypDependencies": true
+    }
   },
   "runArgs": [
     "--add-host=host.docker.internal:host-gateway",
@@ -13,8 +17,8 @@
     "8000": {"label": "Cognee API", "onAutoForward": "notify"},
     "3000": {"label": "Cognee UI", "onAutoForward": "notify"}
   },
-  "postCreateCommand": "uv sync --dev --extra ollama && cp .env.lmstudio-local .env && echo 'Runtime devcontainer ready. The API will start automatically via postStartCommand.'",
-  "postStartCommand": "uv run python -m cognee.api.client",
+  "postCreateCommand": "uv sync --dev --extra ollama && cp .env.lmstudio-local .env && cd cognee-frontend && npm install && cd .. && echo 'Runtime devcontainer ready. The API and UI will start automatically via postStartCommand.'",
+  "postStartCommand": "bash .devcontainer/runtime/postStartCommand.sh",
   "customizations": {
     "vscode": {
       "extensions": [
