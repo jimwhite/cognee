@@ -48,7 +48,14 @@ dependencies = [
     "structlog>=25.2.0,<26",
     "pympler>=1.1,<2.0.0",
     "pylance>=0.22.0,<=0.36.0",
-    "ladybug==0.16.0",
+    # Pinned exactly on purpose. Cognee loads Ladybug's JSON extension (used by
+    # temporal queries and json_extract in the graph adapter) from
+    # https://extension.ladybugdb.com/<version>/<platform>/. The server only
+    # hosts builds for a subset of releases (0.16.0 is gone; 0.21.1/0.21.2 were
+    # never built), so bumping to a version without a published JSON extension
+    # makes "INSTALL JSON" fail and leaves any database that references the
+    # extension unopenable ("Failed to load library: libjson.lbug_extension").
+    "ladybug==0.21.0",
     "python-magic-bin<0.5 ; platform_system == 'Windows'", # Only needed for Windows
     "networkx>=3.4.2,<4",
     "uvicorn>=0.34.0,<1.0.0",
